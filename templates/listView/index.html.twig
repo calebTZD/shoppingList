@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+{% block stylesheets %}
+    <style>
+        body{
+            display: grid;
+            width: 100%;
+            height: 100%;
+            justify-content: space-around;
+        }
+        table, td, th{
+            padding: 3px 5px;
+            border-collapse: collapse;
+            border: 1px solid black;
+        }
+
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <table>
+        <tr>
+            <th>Items</th>
+            <th>Price</th>
+        </tr>
+        {% for item in items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.price ?? 0 }}</td>
+                <td><a href="{{ path('delete-item', {listId: id, itemId: item.id}) }}">delete</a></td>
+            </tr>
+        {% endfor%}
+    </table>
+    {{ form_errors(newItemForm) }}
+
+    {{ form_start(newItemForm) }}
+    {{ form_row(newItemForm.name, {
+        label: 'Name: '
+    }) }}
+    {{ form_row(newItemForm.price, {
+        label: 'Price: '
+    }) }}
+
+    <button type="submit" class="btn">Submit</button>
+    {{ form_end(newItemForm) }}
+
+{% endblock %}

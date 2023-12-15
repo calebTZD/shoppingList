@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+{% block stylesheets %}
+    <style>
+        body{
+            display: grid;
+            width: 100%;
+            height: 100%;
+            justify-content: space-around;
+        }
+        table, td, th{
+            padding: 3px 5px;
+            border-collapse: collapse;
+            border: 1px solid black;
+        }
+
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <table>
+        <tr>
+            <th>List Name</th>
+            <th>Estimated Cost</th>
+        </tr>
+        {% for item in lists %}
+            <tr>
+                <td><a href="{{ path('lists', {id: item.id}) }}">{{ item.name }}</a></td>
+                <td>{{ item.estimatedcost ?? 0.00 }}</td>
+                <td><a href="{{ path('delete-list', {id: item.id}) }}">delete</a></td>
+            </tr>
+        {% endfor%}
+    </table>
+    {{ form_errors(newListForm) }}
+
+    {{ form_start(newListForm) }}
+    {{ form_row(newListForm.name, {
+        label: 'Name: '
+    }) }}
+
+    <button type="submit" class="btn">Submit</button>
+    {{ form_end(newListForm) }}
+
+{% endblock %}
